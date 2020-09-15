@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    body {
+      background-color: rgba(0,0,0,.07);
+    }
+
+    h1 {
+      font-size: 60px;
+      padding: 80px;
+      text-align: center;
+      color: white;
+      text-shadow: 5px 5px 0 rgba(0,0,0,.1);
+    }
+    header {background-color: rgba(0,0,0,.07);}
+
+    .main {
+      background-color: black;
+      display: flex;
+      justify-content: space-between;
+      list-style-type: none;
+      top: 0;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .main li {
+      flex-grow: 1;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .main li a {
+      color: white;
+      font-size: 20px;
+      padding: 20px 0;
+      display: block;
+    }
+
+    .main .logo {
+      background-color: white;
+      max-width: 0;
+      overflow: hidden;
+      transition: all 0.5s;
+      font-weight: bold;
+    }
+
+    .main .logo.navfix {max-width: 500px;}
+
+    .main .logo a {color: black; font-size: 30px;}
+
+    .wrapper {
+      max-width: 700px;
+      padding: 20px 0;
+      margin: 120px auto;
+      background-color: white;
+      box-shadow: 0 0 10px 10px rgba(0,0,0,.07);
+      transform: scale(0.98);
+      transition: all 0.3s;
+    }
+
+    p {
+      margin: 20px 40px;
+      font-size: 20px;
+      text-align: justify;
+    }
+
+
+  </style>
+</head>
+<body>
+  <header><h1>A story about getting lost.</h1></header>
+  <ul class="main">
+    <li class="logo"><a href="#">LOST.</a></li>
+    <li><a href="#">HOME</a></li>
+    <li><a href="#">ABOUT</a></li>
+    <li><a href="#">IMAGES</a></li>
+    <li><a href="#">LOCATIONS</a></li>
+    <li><a href="#">MAPS</a></li>
+  </ul>
+  <div class="wrapper">
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsum quasi asperiores quaerat officiis, cumque maxime! Numquam provident deserunt ad animi et, itaque soluta cum, vero, hic repudiandae pariatur obcaecati omnis officiis laborum. Omnis id architecto error nostrum, dolore ullam debitis.</p>
+    <p>Numquam ipsa odit rerum libero magnam. Laudantium tempora inventore sequi enim. Saepe architecto neque quos, nihil, blanditiis voluptatem eius itaque, qui eligendi ipsa est excepturi maxime in necessitatibus nam! Rerum molestiae praesentium laudantium sequi nesciunt necessitatibus cum alias, commodi dolore.</p>
+    <p>Quibusdam soluta dignissimos amet recusandae nobis quos labore iste sit commodi obcaecati corrupti rem quia quis architecto suscipit vel quisquam, accusantium nesciunt officia tenetur rerum praesentium possimus error aliquid at? Voluptatum commodi reiciendis quod praesentium, libero sit ducimus sequi optio.</p>
+    <p>Iusto dicta omnis reiciendis laborum magni molestias in, hic aut officiis, excepturi, asperiores eveniet aperiam quas cumque blanditiis natus sint eligendi amet, reprehenderit harum autem iste! Voluptatum distinctio fugiat explicabo, soluta, cum fuga iste illum, neque totam harum ipsa provident.</p>
+    <p>Earum optio, sapiente. Sint in saepe ipsam praesentium autem dolores aliquid expedita, eveniet aliquam doloremque! Porro, sed vitae eum voluptates blanditiis, repellat non? Nostrum fugiat dolorum fuga necessitatibus eos quis corporis odio porro, unde. Inventore recusandae ab autem. Obcaecati, corporis!</p>
+    <p>Dolorum similique, ipsam, voluptatum ratione corrupti minus reprehenderit provident sequi natus. Laborum, reiciendis officia id nulla, dolores fuga porro aut excepturi doloremque tempora laudantium nihil expedita atque est dignissimos quaerat quod deserunt sit fugit quos hic officiis consectetur libero! Sapiente!</p>
+    <p>Consequatur quasi alias suscipit cumque corporis. At, distinctio repudiandae reiciendis sit quas nisi maiores blanditiis, eligendi iure amet molestiae consectetur a quibusdam voluptates unde odit dolores. A ullam minus facere asperiores libero necessitatibus voluptates id, porro nam et, ut, accusamus.</p>
+    <p>Corporis ullam ut, cum sapiente aperiam quia repellendus adipisci fugiat reprehenderit cupiditate eaque fuga inventore optio dicta quibusdam ad alias recusandae voluptates omnis error dolor necessitatibus? Fugit vero praesentium maxime, quo earum assumenda exercitationem optio temporibus, sapiente magnam voluptas mollitia.</p>
+    <p>Tenetur hic magnam consectetur tempora temporibus, excepturi consequuntur accusantium omnis in nihil veniam aperiam mollitia ex modi molestias rem? Modi, a laboriosam eos iste maxime harum tempora qui sint, possimus veritatis repellendus debitis laborum, consectetur reiciendis nulla perspiciatis ut vitae.</p>
+    <p>Nisi eius vitae ex iste beatae ipsa sunt. Ea porro fugiat voluptates inventore sint dolorem ut alias provident atque minus tempore soluta quos, voluptatem a velit eaque sed quidem nisi nobis maiores officiis itaque. Assumenda vero quaerat ducimus, incidunt quibusdam.</p>
+  </div>
+
+<script>
+  const header = document.querySelector("header");
+  const nav = document.querySelector(".main");
+  const wrapper = document.querySelector(".wrapper");
+  const logo = document.querySelector(".logo");
+
+  window.addEventListener("scroll", fixnav);
+
+  function fixnav(e) {
+    if (window.scrollY >= header.offsetHeight) {
+      nav.style.position = "fixed";
+      document.body.style.marginTop = nav.offsetHeight + "px";
+      wrapper.style.transform = "scale(1)";
+      logo.classList.add("navfix");
+    } else {
+      nav.style.position = "static";
+      document.body.style.marginTop = 0;
+      wrapper.style.transform = "scale(0.98)";
+      logo.classList.remove("navfix");
+    }
+  }
+</script>
+</body>
+</html>

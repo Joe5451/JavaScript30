@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+    h1 {
+      font-size: 150px;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+  <h1 class="addShadow" contenteditable>🔥Fire</h1>
+<script>
+  const addShadow = document.querySelector(".addShadow");
+  function shadow(e) {
+    let x = window.innerWidth/2 - e.clientX;
+    let y = window.innerHeight/2 - e.clientY;
+    addShadow.style.textShadow = `
+      ${-x}px ${-y}px 0 rgba(255,0,255,.7),
+      ${x}px ${y}px 0 rgba(0,255,255,.7),
+      ${y}px ${-x}px 0 rgba(0,255,0,.7),
+      ${-y}px ${x}px 0 rgba(0,0,255,.7)
+    `
+  }
+
+  window.addEventListener("mousemove",shadow);
+</script>
+</body>
+</html>

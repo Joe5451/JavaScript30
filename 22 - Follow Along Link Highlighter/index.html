@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      text-decoration: none;
+    }
+
+    html {
+      font-family: sans-serif;
+    }
+
+    body {
+      background-color: lightblue;
+    }
+
+    a {
+      background-color: rgba(0,0,0,.05);
+      border-radius: 20px;
+      color: black;
+    }
+
+    .nav {
+      text-align: center;
+      padding: 10px;
+      margin: 80px 0;
+    }
+
+    .nav a {
+      margin: 0 20px;
+      padding: 5px;
+    }
+
+    .wrapper {
+      max-width: 500px;
+      margin: auto;
+      margin-top: 80px;
+    }
+
+    p {
+      font-size: 20px;
+      margin: 20px 0;
+      line-height: 2em;
+    }
+    .highlight {
+      background-color: white;
+      border-radius: 20px;
+      width: 0;
+      height: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: all 0.2s;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <a href="#">Home</a>
+    <a href="#">Order Status</a>
+    <a href="#">Tweets</a>
+    <a href="#">Read Our History</a>
+    <a href="#">Contact Us</a>
+  </div>
+  <div class="wrapper">
+    <p>
+      Lorem ipsum dolor sit amet, <a href="#">consectetur</a> adipisicing elit.
+      Est <a href="#">explicabo</a> unde natus necessitatibus esse obcaecati distinctio,
+      aut itaque, qui vitae!
+    </p>
+    <p>
+      Aspernatur sapiente quae sint <a href="#">soluta</a> modi, atque praesentium laborum
+      pariatur earum <a href="#">quaerat</a> cupiditate consequuntur facilis ullam dignissimos,
+      aperiam quam veniam.
+    </p>
+    <p>
+      Cum ipsam quod, incidunt sit ex <a href="#">tempore</a> placeat maxime
+      <a href="#">corrupti</a> possimus <a href="#">veritatis</a> ipsum fugit
+      recusandae est doloremque? <a href="#">Hic</a>, quibusdam, nulla.
+    </p>
+    <p>
+      Esse quibusdam, ad, ducimus cupiditate <a href="#">nulla</a>, quae magni
+      odit <a href="#">totam</a> ut consequatur eveniet sunt quam provident
+       sapiente dicta neque quod.
+    </p>
+    <p>
+      Aliquam <a href="#">dicta</a> sequi culpa fugiat <a href="#">consequuntur</a>
+       pariatur optio ad minima, <a href="#">maxime odio</a>, distinctio
+       magni impedit tempore enim repellendus <a href="#">repudiandae</a> quas!
+    </p>
+    <div class="highlight"></div>
+  </div>
+
+<script>
+  const allLinks = document.querySelectorAll("a");
+  const highlight = document.querySelector(".highlight");
+  allLinks.forEach(function(link) {
+    link.addEventListener("mouseover", light);
+  });
+
+  function light(e) {
+    //並不是 e.target 的屬性，我想應該是 DOM 的方法
+    //不過 this 還是可以使用 e.target 表示
+    const positionData = this.getBoundingClientRect();
+    const top = positionData.top + window.scrollY;
+    const left = positionData.left + window.scrollX;
+    const width = positionData.width;
+    const height = positionData.height;
+    highlight.style.top = top + "px";
+    highlight.style.left = left + "px";
+    highlight.style.width = width + "px";
+    highlight.style.height = height + "px";
+    console.log(positionData,
+      `top = ${top}px, left = ${left}px, width = ${width}px, height = ${height}px`);
+  }
+
+</script>
+</body>
+</html>

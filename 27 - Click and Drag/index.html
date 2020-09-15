@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: sans-serif;
+    }
+
+    body {
+      background-image: linear-gradient(180deg, purple, blue);
+      height: 100vh;
+    }
+
+    .slider {
+      border: 1px solid rgba(255,255,255,.5);
+      width: 80%;
+      height: 500px;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow: hidden;
+      cursor: pointer;
+      transform: scale(0.95);
+      transition: all 0.5s;
+    }
+
+    .slider.active {
+      cursor: grabbing;
+      transform: scale(1);
+    }
+
+    .wrapper {
+      width: 3220px;
+      padding: 0 10px;
+    }
+
+    .wrapper::after {
+      clear: both;
+      content: "";
+      display: block;
+    }
+
+    .item {
+      width: 300px;
+      height: 400px;
+      margin: 50px 10px;
+      border: 1px solid rgba(255,255,255,.5);
+      color: rgba(255,255,255,.5);
+      font-size: 40px;
+      text-align: center;
+      line-height: 400px;
+      float: left;
+      background-image: linear-gradient(black, white);
+      text-shadow: 5px 5px rgba(0,0,0,.07);
+    }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="wrapper">
+      <div class="item">item 1</div>
+      <div class="item">item 2</div>
+      <div class="item">item 3</div>
+      <div class="item">item 4</div>
+      <div class="item">item 5</div>
+      <div class="item">item 6</div>
+      <div class="item">item 7</div>
+      <div class="item">item 8</div>
+      <div class="item">item 9</div>
+      <div class="item">item 10</div>
+    </div>
+  </div>
+<script>
+  // const wrapper = document.querySelector(".wrapper");
+  const slider = document.querySelector(".slider");
+  let startX;
+  let isDown = false;
+  let scrollLeft;
+
+  function handleDown(e) {
+    isDown = true;
+    slider.classList.add("active");
+    startX = e.clientX;
+    scrollLeft = slider.scrollLeft;
+  }
+
+  function handleMove(e) {
+    if(!isDown) return;
+    e.preventDefault();
+    //滑鼠移動預設有反白文字，雖然不影響拖移功能，但不好看，可以註解掉這行看看
+    const walk = (startX - e.clientX)*3;
+    slider.scrollLeft = scrollLeft + walk;
+    console.log("");
+    console.log("slider.scrollLeft = " + slider.scrollLeft);
+    console.log("startX = " + startX);
+    console.log("e.clientX = " + e.clientX);
+  }
+
+  function handleUp(e) {
+    isDown = false;
+    slider.classList.remove("active");
+  }
+
+  function handleLeave(e) {
+    isDown = false;
+    slider.classList.remove("active");
+  }
+
+  slider.addEventListener("mousedown", handleDown);
+  slider.addEventListener("mousemove", handleMove);
+  slider.addEventListener("mouseup", handleUp);
+  slider.addEventListener("mouseleave", handleLeave);
+
+  // 以下為手機版的，還未完成
+  slider.addEventListener("touchstart", function(e) {console.log(e.targetTouches["0"].clientX)});
+  // slider.addEventListener("touchend", handleUp);
+  // slider.addEventListener("touchmove", handleMove);
+
+</script>
+</body>
+</html>

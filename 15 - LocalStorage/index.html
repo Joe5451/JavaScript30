@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: sans-serif;
+  }
+
+  body {
+    background-color: lightblue;
+  }
+
+  .box {
+    border: 10px solid rgba(0,0,0,.07);
+    background-color: #fff;
+    width: 340px;
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .item-list {
+    margin-bottom: 20px;
+  }
+
+  li {
+    list-style-type: none;
+    border-bottom: 1px solid rgba(0,0,0,.07);
+    padding: 10px 0;
+    text-align: left;
+  }
+
+  input[type="text"], input[type="submit"] {
+    padding: 10px 5px;
+    outline: none;
+  }
+
+  input[type="text"] {width: 65%;}
+  input[type="submit"] {
+    width: 25%;
+    background-color: rgba(0,0,0,.07);
+    border: 1px solid gray;
+  }
+
+  input[type="checkbox"] {margin-right: 5px;}
+  input[type="checkbox"]:checked + span {text-decoration: line-through;}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>To Do List</h2>
+    <ul class="item-list">
+      <li>No Any Item</li>
+    </ul>
+    <form name="item-form">
+      <input type="text" name="item" required placeholder="Please input a item."
+      autocomplete="off">
+      <input type="submit" value="Add a Item">
+    </form>
+  </div>
+<script>
+  const itemForm = document.querySelector("form[name='item-form']");
+  const itemInput = document.querySelector("input[name='item']");
+  const itemList = document.querySelector(".item-list");
+  const items = JSON.parse(localStorage.getItem("items")) || [];
+  if (items.length > 0) updateList(items);
+
+  function addItem(e) {
+    e.preventDefault();
+    items.push( {value: itemInput.value, done: false});
+    localStorage.setItem("items",JSON.stringify(items));
+    updateList(items);
+    this.reset();
+  }
+
+  function updateList(items = []) {
+    itemList.innerHTML = "";
+    items.forEach(function(item, index) {
+      let li = document.createElement("li");
+      let span = document.createElement("span");
+      let text = document.createTextNode(item["value"]);
+
+      let checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.setAttribute("data-index", index);
+      checkbox.addEventListener("click",toggleDone);
+      if (item.done) {checkbox.setAttribute("checked", "");};
+
+      span.appendChild(text);
+      li.appendChild(checkbox);
+      li.appendChild(span);
+      itemList.appendChild(li);
+    })
+  }
+
+  function toggleDone(e) {
+    const index = e.target.dataset.index;
+    items[index]["done"] = !items[index]["done"]; // 切換 done 的 boolean 值
+    localStorage.setItem("items",JSON.stringify(items));
+  }
+
+  itemForm.addEventListener("submit", addItem);
+
+</script>
+</body>
+</html>

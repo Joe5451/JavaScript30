@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-family: sans-serif;
+    }
+
+    body {
+      background-color: blue;
+    }
+
+    .wrapper {
+      display: flex;
+      align-items: stretch;
+      background-color: purple;
+      box-shadow: 0 5px 5px rgba(0,0,0,.5);
+    }
+
+    .timer_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 16.66%;
+      text-align: center;
+      padding: 20px;
+      border-right: 1px solid black;
+      color: white;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    /* .custom_time {
+      padding: 10px;
+    } */
+
+    form {
+      display: flex;
+    }
+
+    [name="minutes"] {
+      /* width: 16.66%; */
+      /* align-self: stretch; */
+      font-size: 20px;
+      outline: none;
+    }
+    .display {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      text-align: center;
+    }
+
+    .count_time {
+      font-size: 80px;
+      font-weight: normal;
+    }
+
+    .end_time {
+      font-size: 60px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="timer_button" data-time="20">20 SECS</div>
+    <div class="timer_button" data-time="300">Work 5</div>
+    <div class="timer_button" data-time="900">Quick 15</div>
+    <div class="timer_button" data-time="1200">Snack 20</div>
+    <div class="timer_button" data-time="3600">Lunch Break</div>
+    <form name="custom">
+      <input type="text" name="minutes" placeholder="Enter Minutes" autocomplete="off">
+    </form>
+  </div>
+  <div class="display">
+    <h1 class="count_time"></h1>
+    <p class="end_time"></p>
+  </div>
+<script>
+  const timerBtns = document.querySelectorAll(".timer_button");
+  const customForm = document.querySelector("form[name='custom']");
+  const customInput = document.querySelector("[name='minutes']");
+  const countTime = document.querySelector(".count_time");
+  const endTime = document.querySelector(".end_time");
+  let timer;
+
+  function handle(e) {
+    e.preventDefault(); // 避免表單提交重新整理頁面
+
+    console.log("data-time =",this.dataset.time);
+    const now = new Date();
+    const currentHours = now.getHours();
+    const currentMinutes = now.getMinutes();
+    const currentSeconds = now.getSeconds();
+    console.log(`now = ${currentHours} : ${currentMinutes} : ${currentSeconds}`)
+
+    const duration = parseInt(this.dataset.time || customInput.value*60);
+    // 沒有 data-time 就選擇客製化的 input
+    customInput.value = "";
+
+    const endTotalSeconds = currentHours*3600 + currentMinutes*60 + currentSeconds + duration
+    let endHours = Math.floor(endTotalSeconds / 3600);
+    if (endHours >= 24) endHours = 0;
+    if (endHours < 10) endHours = `0${endHours}`;
+
+    let endMinutes = Math.floor(endTotalSeconds % 3600 / 60);
+    if (endMinutes < 10) endMinutes = `0${endMinutes}`;
+
+    let endSeconds = Math.floor(endTotalSeconds % 3600 % 60);
+    if (endSeconds < 10) endSeconds = `0${endSeconds}`;
+
+    const outputEndTime = `${endHours} : ${endMinutes} : ${endSeconds}`;
+    console.log(`end time = ${outputEndTime}`);
+    endTime.innerHTML = outputEndTime;
+
+    clearTimeout(timer);
+    count(duration);
+  }
+
+  function count(duration) {
+    let durationHours = Math.floor(duration / 3600);
+    if (durationHours < 10) durationHours = `0${durationHours}`;
+
+    let durationMinutes = Math.floor(duration % 3600 / 60);
+    if (durationMinutes < 10) durationMinutes = `0${durationMinutes}`;
+
+    let durationSeconds = Math.floor(duration % 60);
+    if (durationSeconds < 10) durationSeconds = `0${durationSeconds}`;
+
+    const count_output = `${durationHours} : ${durationMinutes} : ${durationSeconds}`;
+    console.log(`count: ${count_output}`);
+    countTime.innerHTML = count_output;
+
+    if (duration > 0) {
+      duration--;
+      timer = setTimeout(function() {count(duration)}, 1000);
+    }
+  }
+
+  timerBtns.forEach(btn => btn.addEventListener("click", handle));
+  customForm.addEventListener("submit", handle);
+</script>
+</body>
+</html>

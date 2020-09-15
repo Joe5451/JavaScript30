@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flex Panels 💪</title>
+  <link href='https://fonts.googleapis.com/css?family=Amatic+SC' rel='stylesheet' type='text/css'>
+  <style>
+    html {
+      box-sizing: border-box;
+      background: #ffc600;
+      font-family: 'helvetica neue';
+      font-size: 20px;
+      font-weight: 200;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+    }
+
+    .panels {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+    }
+
+    .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
+    .panel2 { background-image:url(https://source.unsplash.com/rFKUFzjPYiQ/1500x1500); }
+    .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
+    .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
+    .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+
+    /* Flex Children */
+    .panel {
+      overflow: hidden;
+      flex-grow: 1;
+      color: white;
+      font-size: 80px;
+      font-family: "Amatic SC";
+      background-position: center;
+      background-size: cover;
+      text-shadow: 0 0 10px #000;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.5s cubic-bezier(0.6,-0.31, 0.76,-0.23);
+      flex-basis: 10%;
+    }
+
+    .panel.toggleFlow {
+      flex-grow: 2;
+      font-size: 160px;
+    }
+
+    .panel *:first-child, .panel *:last-child {
+      font-size: 40px;
+      transition: all 0.5s cubic-bezier(0.6,-0.31, 0.76,-0.23);
+    }
+
+    .panel *:first-child {transform: translateY(-100%);}
+    .panel *:last-child {transform: translateY(100%);}
+    .panel .open_active {transform: translateY(0); font-size: 80px;}
+
+    .panel>* {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="panels">
+    <div class="panel panel1">
+      <p>Hey</p>
+      <p>Let's</p>
+      <p>Dacne</p>
+    </div>
+    <div class="panel panel2">
+      <p>Give</p>
+      <p>Take</p>
+      <p>Receive</p>
+    </div>
+    <div class="panel panel3">
+      <p>Experience</p>
+      <p>It</p>
+      <p>Today</p>
+    </div>
+    <div class="panel panel4">
+      <p>Give</p>
+      <p>All</p>
+      <p>You can</p>
+    </div>
+    <div class="panel panel5">
+      <p>Life</p>
+      <p>In</p>
+      <p>Motion</p>
+    </div>
+  </div>
+
+  <script>
+    function open() {
+      this.classList.toggle("toggleFlow");
+    }
+
+    function open_active(e) {
+      if (e.propertyName.includes('flex')) {
+        this.querySelector("*:first-child").classList.toggle("open_active");
+        this.querySelector("*:last-child").classList.toggle("open_active");
+      }
+    }
+
+    const panels = document.querySelectorAll(".panel");
+    panels.forEach(function(panel) {
+      panel.addEventListener("click", open);
+      panel.addEventListener("transitionend", open_active);
+    });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="https://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+  const passKey = "pass";
+  const inputKey = [1,2,3,4];
+  window.addEventListener("keypress", function(e) {
+    if (inputKey.length >= 4) {
+      inputKey.shift();
+    }
+    inputKey.push(e.key);
+    console.log(e.key, inputKey);
+
+    let input = inputKey.join("");
+    console.log(input);
+
+    if (input == passKey) {
+      console.log("Bingo!!");
+      cornify_add();
+    }
+  })
+</script>
+</body>
+</html>

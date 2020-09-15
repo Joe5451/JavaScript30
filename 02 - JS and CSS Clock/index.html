@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div class="clock">
+    <div class="clock_face">
+      <div class="hour hand"></div>
+      <div class="minute hand"></div>
+      <div class="second hand"></div>
+    </div>
+  </div>
+
+<script>
+  const now = new Date();
+  const second = now.getSeconds();
+  const minute = now.getMinutes();
+  const hour = now.getHours();
+
+  let second_degree = (second/60)*360 + 90;
+  let second_hand = document.querySelector('.second');
+  let minute_degree = (minute/60)*360 + 90;
+  let minute_hand = document.querySelector('.minute');
+  let hour_degree = (hour/12)*360 + 90;
+  let hour_hand = document.querySelector('.hour');
+
+  second_hand.style.transform = `rotate(${second_degree}deg)`;
+  minute_hand.style.transform = `rotate(${minute_degree}deg)`;
+  hour_hand.style.transform = `rotate(${hour_degree}deg)`;
+
+  function setDate() {
+    second_degree += 360/60;
+    minute_degree += 360/3600;
+    hour_degree += 360/43200;
+
+    second_hand.style.transform = `rotate(${second_degree}deg)`;
+    minute_hand.style.transform = `rotate(${minute_degree}deg)`;
+    hour_hand.style.transform = `rotate(${hour_degree}deg)`;
+  }
+  setInterval(setDate,1000);
+</script>
+<style>
+.clock {
+    box-sizing: border-box;
+    width: 30rem;
+    height: 30rem;
+    border-radius: 50%;
+    box-shadow: 0 0 10px 10px rgba(0,0,0,.05);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    padding: 2.5rem;
+  }
+
+  .clock_face {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border:2px solid rgba(0,0,0,.2);
+    box-shadow: 0 0 5px 0px rgba(0,0,0,.5) inset;
+  }
+
+  .hand {
+    border: 1px solid #000;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: rotate(90deg);
+    transform-origin: 100%;
+    transition: all 0.3s;
+    transition-timing-function: cubic-bezier(0.1, 2.7, 0.53, 0.48);
+  }
+
+  .hour {
+    width: 30%;
+    height: 10px;
+    border-color: red;
+    background-color: red;
+  }
+
+  .minute {
+    width: 35%;
+    height: 5px;
+    border-color: green;
+    background-color: green;
+  }
+
+  .second {
+    width: 45%;
+    height: 3px;
+    border-color: blue;
+    background-color: blue;
+  }
+</style>
+</body>
+</html>

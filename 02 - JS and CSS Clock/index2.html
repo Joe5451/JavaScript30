@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: lightblue;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border-radius: 50%;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,0.7);
+      padding: 2.5rem;
+      background-color: #fff;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      margin: auto;
+    }
+
+    .clock_face {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 2px solid gray;
+      box-shadow: 0 0 4px 4px rgba(0,0,0,.1) inset;
+      position: relative;
+    }
+
+    .hand {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 50%;
+      margin: auto 0;
+      transform: rotate(90deg);
+      transform-origin: 100%;
+      transition: transform 0.3s cubic-bezier(0.1, 2.7, 0.53, 0.48);
+    }
+
+    .hour {
+      background-color: red;
+      width: 30%;
+      height: 15px;
+    }
+
+    .minute {
+      background-color: green;
+      width: 40%;
+      height: 8px;
+    }
+
+    .second {
+      background-color: blue;
+      width: 45%;
+      height: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="clock">
+    <div class="clock_face">
+      <div class="hour hand"></div>
+      <div class="minute hand"></div>
+      <div class="second hand"></div>
+    </div>
+  </div>
+<script>
+  const now = new Date();
+  const second = now.getSeconds();
+  const minute = now.getMinutes();
+  const hour = now.getHours();
+
+  let second_deg = second/60*360;
+  let minute_deg = minute/60*360 + second_deg/60;
+  let hour_deg = hour/12*360 + minute_deg/12;
+
+  const second_hand = document.querySelector(".second");
+  const minute_hand = document.querySelector(".minute");
+  const hour_hand = document.querySelector(".hour");
+
+  second_hand.style.transform = `rotate(${second_deg + 90}deg)`;
+  minute_hand.style.transform = `rotate(${minute_deg + 90}deg)`;
+  hour_hand.style.transform = `rotate(${hour_deg + 90}deg)`;
+
+  function updateDate() {
+    // 每秒造成的秒針、分針、時針增加角度
+    second_deg += 6;
+    minute_deg += 6/60;
+    hour_deg += 30/3600;
+
+    second_hand.style.transform = `rotate(${second_deg + 90}deg)`;
+    minute_hand.style.transform = `rotate(${minute_deg + 90}deg)`;
+    hour_hand.style.transform = `rotate(${hour_deg + 90}deg)`;
+  }
+
+  setInterval(updateDate, 1000);
+</script>
+</body>
+</html>

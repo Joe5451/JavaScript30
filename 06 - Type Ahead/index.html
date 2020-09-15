@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      list-style-type: none;
+    }
+
+    html {
+      font-family: 'helvetica neue';
+    }
+
+    body {
+      background-color: lightblue;
+    }
+
+    .search_form {
+      margin-top: 50px;
+      text-align: center;
+
+    }
+
+    .search_form>input {
+      font-size: 40px;
+      padding: 20px;
+      text-align: center;
+      border: 10px solid rgba(0,0,0,.05);
+      border-radius: 5px;
+      box-shadow: 0 0 5px 5px rgba(0,0,0,.05);
+    }
+
+    .search_result li {
+      box-sizing: border-box;
+      max-width: 450px;
+      margin: 0 auto;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 20px;
+      background-image: linear-gradient(180deg,gray, #fff 10%);
+      box-shadow: 0 0 5px 5px rgba(0,0,0,.05);
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <form class="search_form">
+    <input type="text" placeholder="City or State">
+    <ul class="search_result">
+      <li>Filter for a city or a state</li>
+    </ul>
+  </form>
+<script>
+  /*
+   作者使用 reg 正則表達式來對資料進行過濾，我只用簡單的過濾，
+   或者說我沒有對 data 過濾，只是確認 input 輸入的是空字串還是空白，
+   我還有可以改進的地方，如將搜尋的字段用別的顏色標示出來
+
+   另外作者使用 fetch() 來取得 api，但這較新不一定每個瀏覽器適用，
+   我使用比較舊的 XHttpRequest 來取得 api
+  */
+
+  let data;
+
+  const xhttp = new XMLHttpRequest();
+  const loc ="https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json";
+  xhttp.open("GET", loc, true);
+  xhttp.send();
+  xhttp.onload = function() {
+    data = JSON.parse(this.responseText);
+  }
+
+  function search_input(search_value, data) {
+    let search_result = data.filter(function(item) {
+      if (item.city.toLowerCase().includes(search_value.toLowerCase()) || item.state.toLowerCase().includes(search_value.toLowerCase())) {
+        return true;
+      }
+    });
+
+    let text = "";
+    search_result.forEach(item =>
+      text += "<li><span>" + item.city + " " + item.state + "</span>"
+      + "<span>" + item.population + "<span></li>");
+    if (search_value == " " || search_value == "") {text = ""};
+    document.querySelector(".search_result").innerHTML = text;
+  }
+
+  const input = document.querySelector("input");
+  input.addEventListener("change",function() {search_input(this.value, data)});
+  input.addEventListener("keyup",function() {search_input(this.value, data)});
+</script>
+</body>
+</html>

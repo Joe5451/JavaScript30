@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    /* :root 可以設置 CSS 變數 */
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
+
+    body {
+      background-color: rgb(64, 0, 128);
+      font-family: sans-serif;
+    }
+
+    h1 {
+      font-size: 80px;
+      color: white;
+      text-align: center;
+    }
+
+    h1 span {
+      color: var(--base);
+    }
+
+    label {
+      font-size: 40px;
+    }
+
+    .input_container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    label {
+      color: white;
+      font-weight: bold;
+    }
+
+    input {
+      margin: 0 20px;
+    }
+
+    img {
+      display: block;
+      margin: 0 auto;
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+  </style>
+</head>
+<body>
+  <h1>Update CSS Variables with <span>JS</span></h1>
+  <div class="input_container">
+    <label for="spacing">Spacing:</label>
+    <input type="range" id="spacing" name="spacing" data-size="px" value="10">
+    <!--
+      data-size 可以在 e.target.dataset.size 找到，script 會用到
+      我想只要有 data- 開頭的屬性都可以使用，雖然沒試過
+   -->
+    <label for="blur">Blur:</label>
+    <input type="range" id="blur" name="blur" data-size="px" value="10" max="25" min="0">
+    <label for="baseColor">Base Color:</label>
+    <input type="color" id="base" name="base" value="#ffc600">
+  </div>
+  <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" alt="img">
+<script>
+  const spacing = document.querySelector("#spacing");
+  const blur = document.querySelector("#blur");
+  const base = document.querySelector("#base");
+
+  function updateData(e) {
+    let unit = e.target.dataset.size || ""; // 沒有 data-sizing 就會選擇空字串
+    // 範例使用 this 代替 e.target，這樣可以不用帶入參數 e，因為 this 就等於 e.target
+    document.documentElement.style.setProperty(`--${e.target.name}`,e.target.value + unit);
+    //document.documentElement 即代表 html 這份文檔，而以上寫法能夠找到 :root 裡的變數
+  }
+
+  let inputs = document.querySelectorAll("input");
+  for (let i = 0; i < inputs.length; i++) {
+    inputs[i].addEventListener("change",function(e) {updateData(e)});
+    inputs[i].addEventListener("mousemove",updateData); //這樣也可以
+  }
+</script>
+</body>
+</html>
